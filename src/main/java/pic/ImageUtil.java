@@ -1,6 +1,8 @@
 package pic;
 
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.*;
 import java.nio.Buffer;
 
 /***
@@ -10,6 +12,31 @@ import java.nio.Buffer;
  */
 
 public class ImageUtil {
+
+    public static BufferedImage loadImage(String filename)throws FileNotFoundException, IOException{
+        InputStream is = null;
+
+        try{
+            is = new FileInputStream(new File(filename));
+            return ImageIO.read(is);
+        }catch (Exception e){
+            is = null;
+        }
+        
+        try{
+            is = ImageUtil.class.getClassLoader().getResourceAsStream(filename);
+            return ImageIO.read(is);
+        }catch (Exception e){
+            System.err.printf("Could not print %s\n", filename);
+        }finally{
+            try{
+                is.close();
+            }catch (IOException e){
+
+            }
+        }
+        return null;
+    }
 
     public static BufferedImage[][] partitionImage(BufferedImage image, int blockSize){
         int width = image.getWidth();
