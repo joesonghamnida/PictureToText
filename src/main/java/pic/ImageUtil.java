@@ -1,6 +1,7 @@
 package pic;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.Buffer;
@@ -22,7 +23,7 @@ public class ImageUtil {
         }catch (Exception e){
             is = null;
         }
-        
+
         try{
             is = ImageUtil.class.getClassLoader().getResourceAsStream(filename);
             return ImageIO.read(is);
@@ -58,5 +59,17 @@ public class ImageUtil {
             }
         }
         return blocks;
+    }
+
+    public static BufferedImage cloneImage(BufferedImage originalImage){
+        return cloneImage(originalImage, originalImage.getType());
+    }
+
+    public static BufferedImage cloneImage(BufferedImage originalImage, int imageType){
+        BufferedImage copyImage = new BufferedImage(originalImage.getWidth(), originalImage.getHeight(), imageType);
+        Graphics graphics = copyImage.createGraphics();
+        graphics.drawImage(originalImage, 0, 0, null);
+        graphics.dispose();
+        return copyImage;
     }
 }
