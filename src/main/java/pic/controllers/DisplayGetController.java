@@ -57,6 +57,12 @@ public class DisplayGetController {
             }
         }
 
+        //add up numerical values & either remove duplicates or tally # of occurrences
+        //read in text and break down into values
+        //check color values against text values, store in hashmap?
+        //maybe do some other analysis?
+        //pass to frontend
+
         Path path = Paths.get("public/files/", file.getName());
         Files.delete(path);
 
