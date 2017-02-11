@@ -12,12 +12,13 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 import pic.ImageUtil;
-import sun.awt.image.ToolkitImage;
 
 @Controller
 public class DisplayGetController {
@@ -33,11 +34,30 @@ public class DisplayGetController {
         File file = (File) session.getAttribute("picture");
 
         BufferedImage image = ImageIO.read(file);
-        
-        BufferedImage[][] blocks = ImageUtil.partitionImage(image, 8);
-        for(int i = 0; i < 100; i++){
-            System.out.println(blocks[i][i]);
+
+        //BufferedImage[][] blocks = ImageUtil.partitionImage(image, 8);
+
+        ArrayList<Color> colors = new ArrayList<>();
+
+        System.out.println("Height: " + image.getHeight());
+        System.out.println("Width: " + image.getWidth());
+
+        //Color color = new Color(image.getRGB(0, 0));
+        //colors.add(color);
+
+        //TODO: issue with image coordinates when using the full image size
+        //keeps saying out of bounds @ row: 660 column: 0 for bit.jpg
+        //breaks on row 0 width 540 for sangeo.jpg
+        for (int row = 0; row < image.getHeight()/2; row++) {//image.getHeight()
+            for (int column = 0; column < image.getWidth()/2; column++) {
+                System.out.printf("Coordinates: %d %d\n", row, column);
+                Color color = new Color(image.getRGB(row, column));
+                colors.add(color);
+            }
         }
+
+        Path path = Paths.get("public/files/", file.getName());
+        Files.delete(path);
 
         return ("home");
     }
