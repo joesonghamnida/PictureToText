@@ -48,6 +48,7 @@ public class DisplayGetController {
         //TODO: issue with image coordinates when using the full image size
         //keeps saying out of bounds @ row: 660 column: 0 for bit.jpg
         //breaks on row 0 width 540 for sangeo.jpg
+        // halved rows and columns to make work
         for (int row = 0; row < image.getHeight()/2; row++) {//image.getHeight()
             for (int column = 0; column < image.getWidth()/2; column++) {
                 System.out.printf("Coordinates: %d %d\n", row, column);
