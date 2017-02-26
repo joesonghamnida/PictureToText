@@ -42,12 +42,42 @@ public class DisplayGetController {
         System.out.println("Height: " + image.getHeight());
         System.out.println("Width: " + image.getWidth());
 
-            for (int row = 0; row < image.getHeight(); row++) {//image.getHeight()
-                for (int column = 0; column < image.getWidth(); column++) {
+        for (int row = 0; row < image.getHeight(); row++) {
+            for (int column = 0; column < image.getWidth(); column++) {
                 //System.out.printf("Coordinates: %d %d\n", row, column);
                 Color color = new Color(image.getRGB(column, row));
                 colors.add(color);
             }
+        }
+
+        //TODO: this will need to be refactored into it's own function
+        //group pixels into block, and store block in array list
+        ArrayList<ArrayList> blockGroups = new ArrayList<>();
+        int block = 0;
+        while (block < colors.size()) {
+
+            ArrayList<Color> colorBlock = new ArrayList<>();
+
+            int limit = 0;
+
+            //check current block position to prevent OOB exceptions
+            if (block + 8 < colors.size()) {
+                limit = 8;
+            } else {
+                limit = colors.size() - block;
+            }
+
+            //add # of pixels to block
+            for (int i = 0; i < limit; i++) {
+                colorBlock.add(colors.get(block + i));
+            }
+            blockGroups.add(colorBlock);
+            block += 8;
+        }
+
+        ArrayList<>
+        for(int i = 0; i < blockGroups.size(); i++){
+            
         }
 
         //add up numerical values & either remove duplicates or tally # of occurrences
