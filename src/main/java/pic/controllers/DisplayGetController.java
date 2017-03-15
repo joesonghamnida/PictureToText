@@ -75,12 +75,22 @@ public class DisplayGetController {
             block += 8;
         }
 
-        ArrayList<>
+        //break down list of blocks into individual block
+        //block the block down into colors
+        //add up numerical values & either remove duplicates or tally # of occurrences
+        ArrayList<Integer> blockValues = new ArrayList();
         for(int i = 0; i < blockGroups.size(); i++){
-            
+            ArrayList <ArrayList> blockGroup = new ArrayList<>();
+            blockGroup = blockGroups.get(i);
+
+            int blockValue = 0;
+            for(int j = 0; j < blockGroup.size(); j ++){
+                
+            }
+
         }
 
-        //add up numerical values & either remove duplicates or tally # of occurrences
+
         //read in text and break down into values
         //check color values against text values, store in hashmap?
         //maybe do some other analysis?
