@@ -18,8 +18,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-import pic.ImageUtil;
-
 @Controller
 public class DisplayGetController {
 
@@ -35,8 +33,6 @@ public class DisplayGetController {
 
         BufferedImage image = ImageIO.read(file);
 
-        //BufferedImage[][] blocks = ImageUtil.partitionImage(image, 8);
-
         ArrayList<Color> colors = new ArrayList<>();
 
         System.out.println("Height: " + image.getHeight());
@@ -51,6 +47,7 @@ public class DisplayGetController {
         }
 
         //TODO: this will need to be refactored into it's own function
+        //TODO: why am I grouping this into blocks anyway?
         //group pixels into block, and store block in array list
         ArrayList<ArrayList> blockGroups = new ArrayList<>();
         int block = 0;
@@ -78,18 +75,27 @@ public class DisplayGetController {
         //break down list of blocks into individual block
         //block the block down into colors
         //add up numerical values & either remove duplicates or tally # of occurrences
+        //System.out.println(blockGroups.size());
         ArrayList<Integer> blockValues = new ArrayList();
         for(int i = 0; i < blockGroups.size(); i++){
-            ArrayList <ArrayList> blockGroup = new ArrayList<>();
-            blockGroup = blockGroups.get(i);
+            ArrayList<Color> colorBlock = blockGroups.get(i);
+            //System.out.printf(i+" "+blockGroups.get(i)+"\n");
+            //System.out.println(colorBlock);
 
             int blockValue = 0;
-            for(int j = 0; j < blockGroup.size(); j ++){
-                
+            for(int j = 0; j < colorBlock.size(); j ++){
+                Color color = colorBlock.get(i);
+                blockValue += color.getBlue();
+                blockValue += color.getGreen();
+                blockValue += color.getRed();
+                //blockValue += color.getAlpha();
+
             }
+            blockValues.add(blockValue);
+            System.out.println(blockValue);
 
+            //System.out.println(blockValues.size());
         }
-
 
         //read in text and break down into values
         //check color values against text values, store in hashmap?

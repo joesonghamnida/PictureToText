@@ -24,7 +24,7 @@ public class UploadPostController {
         FileOutputStream fos = new FileOutputStream(f);
         fos.write(file.getBytes());
 
-        session.setAttribute("picture", file.getOriginalFilename());
+        session.setAttribute("picture", f);
 
         return "redirect:/displayResults";
     }
