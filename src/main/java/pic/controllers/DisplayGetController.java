@@ -17,6 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 @Controller
 public class DisplayGetController {
@@ -48,6 +49,7 @@ public class DisplayGetController {
 
         //TODO: this will need to be refactored into it's own function
         //TODO: why am I grouping this into blocks anyway?
+        //have some value greater than color total cap
         //group pixels into block, and store block in array list
         ArrayList<ArrayList> blockGroups = new ArrayList<>();
         int block = 0;
@@ -58,7 +60,7 @@ public class DisplayGetController {
             int limit = 0;
 
             //check current block position to prevent OOB exceptions
-            if (block + 8 < colors.size()) {
+            if (block + 8 <= colors.size()) {
                 limit = 8;
             } else {
                 limit = colors.size() - block;
@@ -74,28 +76,37 @@ public class DisplayGetController {
 
         //break down list of blocks into individual block
         //block the block down into colors
-        //add up numerical values & either remove duplicates or tally # of occurrences
-        //System.out.println(blockGroups.size());
         ArrayList<Integer> blockValues = new ArrayList();
         for(int i = 0; i < blockGroups.size(); i++){
             ArrayList<Color> colorBlock = blockGroups.get(i);
-            //System.out.printf(i+" "+blockGroups.get(i)+"\n");
-            //System.out.println(colorBlock);
 
             int blockValue = 0;
             for(int j = 0; j < colorBlock.size(); j ++){
-                Color color = colorBlock.get(i);
+                Color color = colorBlock.get(j);
                 blockValue += color.getBlue();
                 blockValue += color.getGreen();
                 blockValue += color.getRed();
+                //this is commented out to lower upper range of value
                 //blockValue += color.getAlpha();
-
             }
             blockValues.add(blockValue);
-            System.out.println(blockValue);
-
-            //System.out.println(blockValues.size());
         }
+        System.out.println(blockValues.size());
+
+        //add up # of color values, remove duplicates
+        HashMap<Integer, Integer> colorOccurences = new HashMap<>();
+        for (Integer blockValue: blockValues) {
+
+            if(colorOccurences.containsKey(blockValue)){
+                int occurrence = colorOccurences.get(blockValue);
+              colorOccurences.put(blockValue, occurrence + 1);
+            }
+            else{
+                colorOccurences.put(blockValue, 1);
+            }
+        }
+
+        System.out.println(colorOccurences.size());
 
         //read in text and break down into values
         //check color values against text values, store in hashmap?
