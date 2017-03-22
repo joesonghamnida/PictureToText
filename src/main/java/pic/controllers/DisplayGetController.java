@@ -49,6 +49,7 @@ public class DisplayGetController {
 
         //TODO: this will need to be refactored into it's own function
         //TODO: why am I grouping this into blocks anyway?
+        //TODO: allow for adjustable block sizes - allows user to see what words occur
         //have some value greater than color total cap
         //group pixels into block, and store block in array list
         ArrayList<ArrayList> blockGroups = new ArrayList<>();
@@ -94,19 +95,20 @@ public class DisplayGetController {
         System.out.println(blockValues.size());
 
         //add up # of color values, remove duplicates
-        HashMap<Integer, Integer> colorOccurences = new HashMap<>();
+        //key should be renamed to something clearer
+        HashMap<Integer, Integer> colorOccurrences = new HashMap<>();
         for (Integer blockValue: blockValues) {
 
-            if(colorOccurences.containsKey(blockValue)){
-                int occurrence = colorOccurences.get(blockValue);
-              colorOccurences.put(blockValue, occurrence + 1);
+            if(colorOccurrences.containsKey(blockValue)){
+                int occurrence = colorOccurrences.get(blockValue);
+              colorOccurrences.put(blockValue, occurrence + 1);
             }
             else{
-                colorOccurences.put(blockValue, 1);
+                colorOccurrences.put(blockValue, 1);
             }
         }
 
-        System.out.println(colorOccurences.size());
+        System.out.println(colorOccurrences.size());
 
         //read in text and break down into values
         //check color values against text values, store in hashmap?
