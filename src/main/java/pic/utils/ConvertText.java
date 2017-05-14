@@ -1,7 +1,12 @@
 package pic.utils;
 
-/**
- * Created by joe on 5/10/17.
- */
+import java.util.ArrayList;
+
 public class ConvertText {
+
+    public static ArrayList<String> convertText(ArrayList<String> text){
+        ArrayList<String> convertedText = new ArrayList<>();
+
+        return convertedText;
+    }
 }
