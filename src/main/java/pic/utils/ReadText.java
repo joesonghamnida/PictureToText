@@ -26,5 +26,5 @@ public class ReadText {
 
         return rawText;
     }
-    
+
 }

@@ -19,6 +19,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import pic.utils.*;
+
 @Controller
 public class DisplayGetController {
 
@@ -92,7 +94,7 @@ public class DisplayGetController {
             }
             blockValues.add(blockValue);
         }
-        System.out.println(blockValues.size());
+        System.out.println("block values size: "+blockValues.size());
 
         //add up # of color values, remove duplicates
         //key should be renamed to something clearer
@@ -108,15 +110,31 @@ public class DisplayGetController {
             }
         }
 
-        System.out.println(colorOccurrences.size());
+        System.out.println("color occurrences size: "+colorOccurrences.size());
 
         //read in text and break down into values
-        //check color values against text values, store in hashmap?
-        //maybe do some other analysis?
-        //pass to frontend
+        ArrayList<String> text = new ArrayList<>();
+        text = ReadText.readFile("text.txt");
+        text = CleanText.cleanText(text);
+
+        //probably some bug in here when dealing with the text. Only 351542 values vs 479k+
+        HashMap<String, Integer> textValues = new HashMap<>();
+        textValues = ConvertText.convertText(text);
+        System.out.println("text values size: "+textValues.size());
+
+        ArrayList<ArrayList<String>> wordsAndValues = MapWordToBlock.mapWordToBlock(textValues, colorOccurrences);
+
+        System.out.println(wordsAndValues.size());
+
 
         Path path = Paths.get("public/files/", file.getName());
         Files.delete(path);
+
+        //do bubblesort or something to find the largest values and order
+
+        //pass to frontend
+        //limiter for testing purposes
+        model.addAttribute("results",wordsAndValues.subList(0,10));
 
         return ("home");
     }
