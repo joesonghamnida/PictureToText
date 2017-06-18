@@ -126,11 +126,19 @@ public class DisplayGetController {
 
         System.out.println(wordsAndValues.size());
 
-
         Path path = Paths.get("public/files/", file.getName());
         Files.delete(path);
 
-        //do bubblesort or something to find the largest values and order
+
+        /*
+
+        quicksort here
+
+        */
+
+        //write to file
+        WriteToFile.writeFile(file.getName()+".txt", wordsAndValues.toString());
+
 
         //pass to frontend
         //limiter for testing purposes
