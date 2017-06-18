@@ -37,7 +37,19 @@ public class DisplayGetController {
         BufferedImage image = ImageIO.read(file);
 
         ArrayList<Color> colors = new ArrayList<>();
+        colors = PicDeconstruction.colorBreakdown(image, colors);
 
+        ArrayList<ArrayList> blockGroups = new ArrayList<>();
+        blockGroups = PicDeconstruction.groupIntoBlocks(colors, blockGroups);
+
+        ArrayList<Integer> blockValues = new ArrayList();
+        blockValues = PicDeconstruction.breakdownBlocksIntoBlock(blockGroups, blockValues);
+
+        HashMap<Integer, Integer> colorOccurrences = new HashMap<>();
+        colorOccurrences = PicDeconstruction.removeColorDuplicates(colorOccurrences, blockValues);
+        System.out.println("color occurrences size: "+colorOccurrences.size());
+
+        /*
         System.out.println("Height: " + image.getHeight());
         System.out.println("Width: " + image.getWidth());
 
@@ -48,12 +60,14 @@ public class DisplayGetController {
                 colors.add(color);
             }
         }
+           */
 
         //TODO: this will need to be refactored into it's own function
         //TODO: why am I grouping this into blocks anyway?
         //TODO: allow for adjustable block sizes - allows user to see what words occur
         //have some value greater than color total cap
         //group pixels into block, and store block in array list
+        /*
         ArrayList<ArrayList> blockGroups = new ArrayList<>();
         int block = 0;
         while (block < colors.size()) {
@@ -76,9 +90,11 @@ public class DisplayGetController {
             blockGroups.add(colorBlock);
             block += 8;
         }
+        */
 
         //break down list of blocks into individual block
         //block the block down into colors
+        /*
         ArrayList<Integer> blockValues = new ArrayList();
         for(int i = 0; i < blockGroups.size(); i++){
             ArrayList<Color> colorBlock = blockGroups.get(i);
@@ -95,11 +111,12 @@ public class DisplayGetController {
             blockValues.add(blockValue);
         }
         System.out.println("block values size: "+blockValues.size());
+        */
 
         //add up # of color values, remove duplicates
         //key should be renamed to something clearer
-        HashMap<Integer, Integer> colorOccurrences = new HashMap<>();
-        for (Integer blockValue: blockValues) {
+
+        /*for (Integer blockValue: blockValues) {
 
             if(colorOccurrences.containsKey(blockValue)){
                 int occurrence = colorOccurrences.get(blockValue);
@@ -108,9 +125,8 @@ public class DisplayGetController {
             else{
                 colorOccurrences.put(blockValue, 1);
             }
-        }
+        }*/
 
-        System.out.println("color occurrences size: "+colorOccurrences.size());
 
         //read in text and break down into values
         ArrayList<String> text = new ArrayList<>();
